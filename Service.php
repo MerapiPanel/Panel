@@ -16,17 +16,16 @@ class Service extends __Fragment
     protected $module;
     function onCreate(Box\Module\Entity\Module $module)
     {
-        
-        if(strpos(Request::getInstance()->getPath(), $_ENV['__MP_ADMIN__']['prefix']) == 0 && Box::module("Auth")->isAdmin()) {
-            View::getInstance()->getErrorHandler()->setTemplate("default", "@panel/error.twig");
-        }
         $this->module = $module;
     }
 
 
-    function initialize()
+    function onInit()
     {
         View::getInstance()->getTwig()->addExtension(new ViewExtension());
+        if(strpos(Request::getInstance()->getPath(), $_ENV['__MP_ADMIN__']['prefix']) == 0 && Box::module("Auth")->isAdmin()) {
+            View::getInstance()->getErrorHandler()->setTemplate("default", "@panel/error.twig");
+        }
     }
 
 
