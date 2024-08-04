@@ -25,9 +25,7 @@
 {% set paths = ((request.getPath | replace({( '/' | access_path): ''})) | split('/')) %}
 
 {% block body %}
-
 <body class="panel-body" id="panel-body">
-
     {% include "@panel/navigation.html.twig" %}
 
     {% block main %}
@@ -54,10 +52,10 @@
             <ol class="breadcrumb">
 
                 {% block breadcrumb_item %}
-                <li class="breadcrumb-item"><a href="{{ '/' | access_path }}">{{'home'|trans|capitalize}}</a></li>
+                <li class="breadcrumb-item"><a href="{{ '/' | access_path }}">{{'home'|trans}}</a></li>
                 {% for x,item in paths %}
                     {% if x < (paths | length) -1 %} 
-                        <li class='breadcrumb-item'><a href="{{('/'~(paths|slice(0,x+1))|join('/'))|access_path}}">{{item|trans|ucfirst}}</a></li>
+                        <li class='breadcrumb-item'><a href="{{('/'~(paths|slice(0,x+1))|join('/'))|access_path}}">{{item|trans}}</a></li>
                     {% else %}
                         <li class="breadcrumb-item active" aria-current="page">{{paths[(paths|length)-1]|trans}}</li>
                     {% endif %}

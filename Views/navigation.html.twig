@@ -3,7 +3,7 @@
 {% for item in menu %}
 {% set random = random(1000, 9999) %}
 <li class="nav-item{{ item.active ? ' active' : '' }} pe-0">
-    <div class="d-flex">
+    <div class="d-flex nav-item-component">
         <a {% if item.link %}href="{{ item.link }}" {% endif %} class="nav-link py-2">
             {% if _box.Panel.isFile(item.icon) %}
             <img width="14" height="14" class="object-fit-cover" src="{{ _box.Panel.getAbsolutePath(item.icon) }}" alt="Icon">
@@ -48,12 +48,9 @@
     function openNav() {
         document.getElementById("sidebar").classList.add("open");
     }
-
     function closeNav() {
         document.getElementById("sidebar").classList.remove("open");
     }
-    $(".nav-item").has(".nav-item.active").children(".menu-childs").addClass("show");
-    $(".nav-item").has(".nav-item.active").find("[data-bs-toggle='collapse']").html('<i class="fa-solid fa-angle-up"></i>');
     $("[data-bs-toggle='collapse']").click(function () {
         setTimeout(() => {
             let target = $(this).attr('data-bs-target');
@@ -64,5 +61,17 @@
             }
         }, 400);
     });
-    $(".nav-item.active").find("[data-bs-toggle='collapse']").html('<i class="fa-solid fa-angle-up"></i>');
+    // toggle collapse active contains active item
+    $(".nav-item").has(".nav-item.active")
+        .children(".menu-childs")
+        .addClass("show");
+    // toggle arrow up in active collapse
+    $(".nav-item").has(".nav-item.active")
+        .children("div.nav-item-component")
+        .children("div>[data-bs-toggle='collapse']")
+        .html('<i class="fa-solid fa-angle-up"></i>');
+    // scroll to active item
+    if($(".nav-item.active").length) {
+        $(".nav-item.active")[0].scrollIntoView();
+    }
 </script>
