@@ -4,7 +4,6 @@ namespace MerapiPanel\Module\Panel;
 
 use MerapiPanel\Box;
 use MerapiPanel\Box\Module\__Fragment;
-use MerapiPanel\Box\Module\Entity\Module;
 use MerapiPanel\Exception\Catcher;
 use MerapiPanel\Utility\Http\Request;
 use MerapiPanel\Views\View;
@@ -24,7 +23,10 @@ class Service extends __Fragment
     function onInit()
     {
         View::getInstance()->getTwig()->addExtension(new ViewExtension());
-        if (strpos(Request::getInstance()->getPath(), $_ENV['__MP_ADMIN__']['prefix']) == 0 && Box::module("Auth")->isAdmin()) {
+
+        // write_log(strpos(Request::getInstance()->getPath(), $_ENV['__MP_ADMIN__']['prefix']));
+
+        if (strpos(Request::getInstance()->getPath(), $_ENV['__MP_ADMIN__']['prefix']) === 0 && Box::module("Auth")->isAdmin()) {
             Catcher::addCustomTemplate("@panel/error/error.twig");
             Catcher::addCustomTemplate("@panel/error/404.twig", 404);
         }
