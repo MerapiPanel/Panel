@@ -23,9 +23,6 @@ class Service extends __Fragment
     function onInit()
     {
         View::getInstance()->getTwig()->addExtension(new ViewExtension());
-
-        // write_log(strpos(Request::getInstance()->getPath(), $_ENV['__MP_ADMIN__']['prefix']));
-
         if (strpos(Request::getInstance()->getPath(), $_ENV['__MP_ADMIN__']['prefix']) === 0 && Box::module("Auth")->isAdmin()) {
             Catcher::addCustomTemplate("@panel/error/error.twig");
             Catcher::addCustomTemplate("@panel/error/404.twig", 404);
@@ -210,6 +207,7 @@ class Service extends __Fragment
 
     function isFile($path)
     {
+        if (!$path) return false;
         return is_file($path);
     }
 }
